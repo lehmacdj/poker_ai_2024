@@ -6,6 +6,8 @@ public class State {
 	private Deck deck;
 	private int aiBid;
 	private int humanBid;
+	private int aiChips;
+	private int humanChips;
 
 	/* package */ State() {
 		Deck d = new Deck();
@@ -31,5 +33,9 @@ public class State {
 	/** return the bid for [p] */
 	public int getBid(Player p) {
 		return p == Player.AI ? aiBid : humanBid;
+	}
+
+	public int getChips(Player p) {
+		return p == Player.AI ? aiChips : humanChips;
 	}
 }
