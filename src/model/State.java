@@ -28,6 +28,7 @@ public class State {
 		return p == Player.AI ? ai.copy() : human.copy();
 	}
 
+	/** return the bid for [p] */
 	public int getBid(Player p) {
 		return p == Player.AI ? aiBid : humanBid;
 	}
