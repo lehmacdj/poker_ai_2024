@@ -8,7 +8,7 @@ public class Game {
 	private ArrayList<GameListener> gameListeners;
 
 	public Game() {
-		next = Player.HUMAN;
+		next = Player.FIRST;
 		gameListeners = new ArrayList<>();
 	}
 

@@ -1,10 +1,10 @@
 package model;
 
 public enum Player {
-	AI,
-	HUMAN;
+	FIRST,
+	SECOND;
 
 	public Player opponent() {
-		return this == AI ? HUMAN : AI;
+		return this == FIRST ? SECOND : FIRST;
 	}
 }

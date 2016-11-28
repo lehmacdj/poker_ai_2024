@@ -1,18 +1,18 @@
 package model;
 
 public class State {
-	private Hand ai;
-	private Hand human;
+	private Hand first;
+	private Hand second;
 	private Deck deck;
-	private int aiBid;
-	private int humanBid;
-	private int aiChips;
-	private int humanChips;
+	private int firstBid;
+	private int secondBid;
+	private int firstChips;
+	private int secondChips;
 
 	/* package */ State() {
 		Deck d = new Deck();
-		human = new Hand(d);
-		ai = new Hand(d);
+		first = new Hand(d);
+		second = new Hand(d);
 	}
 
 	/** Update the cards in the state with a move */
@@ -27,15 +27,15 @@ public class State {
 
 	/** returns a Hand for [p] that is not backed by the state */
 	public Hand getPlayer(Player p) {
-		return p == Player.AI ? ai.copy() : human.copy();
+		return p == Player.FIRST ? first.copy() : second.copy();
 	}
 
 	/** return the bid for [p] */
 	public int getBid(Player p) {
-		return p == Player.AI ? aiBid : humanBid;
+		return p == Player.FIRST ? firstBid : secondBid;
 	}
 
 	public int getChips(Player p) {
-		return p == Player.AI ? aiChips : humanChips;
+		return p == Player.FIRST ? firstChips : secondChips;
 	}
 }

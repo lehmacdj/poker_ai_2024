@@ -4,8 +4,8 @@ public class TUI {
 	public static void main(String[] args) {
 		Game g = new Game();
 		BoardPrinter p = new BoardPrinter();
-		Controller ai = new PokerAI(Player.AI);
-		Controller human = new HumanController(Player.HUMAN);
+		Controller human = new HumanController(Player.FIRST);
+		Controller ai = new PokerAI(Player.SECOND);
 		g.addListener(p);
 		g.addListener(ai);
 		g.addListener(human);
