@@ -10,4 +10,8 @@ public class PokerAI extends Controller {
 	}
 
 	public native Move nextMove(State s);
+
+	static {
+		System.loadLibrary("pokerai");
+	}
 }
