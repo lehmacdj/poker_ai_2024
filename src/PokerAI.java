@@ -4,6 +4,10 @@
 
 import model.*;
 
-public class PokerAI {
+public class PokerAI extends Controller {
+	public PokerAI(Player p) {
+		super(p);
+	}
+
 	public native Move nextMove(State s);
 }

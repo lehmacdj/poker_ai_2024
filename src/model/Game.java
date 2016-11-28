@@ -31,4 +31,10 @@ public class Game {
 	public void addListener(GameListener gl) {
 		gameListeners.add(gl);
 	}
+
+	public void start() {
+		for (GameListener gl : gameListeners) {
+			gl.gameChanged(this);
+		}
+	}
 }
