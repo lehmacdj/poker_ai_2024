@@ -1,3 +1,5 @@
+package controller;
+
 import model.*;
 
 public abstract class Controller implements GameListener {

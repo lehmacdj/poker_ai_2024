@@ -1,10 +1,9 @@
-import java.util.ArrayList;
-import java.util.Arrays;
+package controller;
+
 import java.util.Scanner;
 
 import model.Move;
 import model.Player;
-import model.Replace;
 import model.State;
 
 public class HumanController extends Controller {
@@ -28,16 +27,19 @@ public class HumanController extends Controller {
 	 */
 	public Move readMove() {
 		System.out.println("Please enter one of the following commands:");
-		System.out.println(" 1) replace <card-id-list>");
-		System.out.println(" 2) bid <amount>");
+		System.out.println(" bid <amount>");
+		System.out.println(" fold");
 		Scanner reader = new Scanner(System.in);
 		String command = reader.next();
 		Move move = null;
-		if (command.equals("replace")) {
-			move = new Replace(Arrays.asList(new int[]{0, 1}));
-		} else if (command.equals("bid")) {
+		if (command.equals("bid")) {
+			int amount = reader.nextInt();
+			move = Move.makeBid(amount);
+		} else if (command.equals("fold")) {
+			move = Move.makeFold();
 		}
 		reader.close();
 		return move;
 	}
+
 }
