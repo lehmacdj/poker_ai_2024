@@ -24,3 +24,10 @@ typedef struct {
 /* Return the amount to bid for the next move. If you fold return a negative
  * number instead. */
 int nextMove(game_data data);
+
+/* return the index of the array that represents the winning hand. If neither
+ * hand wins returns -1 instead
+ * - The size of hands is [2][2] and the size of board is [5].
+ * - If any value in either hand or the board is null then the result of this
+ *   operation is undefined. */
+int winningHand(card hands[][], card board[]);
