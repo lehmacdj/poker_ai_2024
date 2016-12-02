@@ -20,10 +20,10 @@ import model.*;
  */
 public class BoardPrinter implements GameListener {
 	public void printPlayer(Player p, State s) {
-		System.out.println(p + " (" + s.getBid(p) + ")");
-		System.out.println("Chips: " + s.getChips(p));
+		System.out.println(p);
+		System.out.println("Chips: " + s.getStack(p));
 		System.out.println("Hand:");
-		for (Card c : s.getHand(p).hand) {
+		for (Card c : s.getHand(p)) {
 			System.out.println("    " + c);
 		}
 	}

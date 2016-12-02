@@ -7,6 +7,7 @@ public class Game {
 	private ArrayList<GameListener> gameListeners;
 
 	public Game() {
+		state = new State();
 		gameListeners = new ArrayList<>();
 	}
 

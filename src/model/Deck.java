@@ -7,6 +7,7 @@ public class Deck {
 	private LinkedList<Card> deck;
 
 	public Deck() {
+		deck = new LinkedList<Card>();
 		for (Card.Rank r : Card.Rank.values()) {
 			for (Card.Suit s : Card.Suit.values()) {
 				deck.add(new Card(r, s));

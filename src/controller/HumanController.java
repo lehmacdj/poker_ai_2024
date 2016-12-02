@@ -7,8 +7,11 @@ import model.Player;
 import model.State;
 
 public class HumanController extends Controller {
+	Scanner in;
+
 	public HumanController(Player p) {
 		super(p);
+		in = new  Scanner(System.in);
 	}
 
 	@Override
@@ -29,17 +32,19 @@ public class HumanController extends Controller {
 		System.out.println("Please enter one of the following commands:");
 		System.out.println(" bid <amount>");
 		System.out.println(" fold");
-		Scanner reader = new Scanner(System.in);
-		String command = reader.next();
+		String command = in.next();
 		Move move = null;
 		if (command.equals("bid")) {
-			int amount = reader.nextInt();
+			int amount = in.nextInt();
 			move = Move.makeBid(amount);
 		} else if (command.equals("fold")) {
 			move = Move.makeFold();
 		}
-		reader.close();
 		return move;
 	}
 
+	@Override
+	public void finalize() {
+		in.close();
+	}
 }
