@@ -96,7 +96,7 @@ public class State {
 				}
 			} else if (amount - amountToCall >= minimumBid) { // raise
 				minimumBid = amount - amountToCall;
-			    commitBidFor(next, amount);
+				commitBidFor(next, amount);
 			} else {
 				throw new RuntimeException("Invalid bid " +
 						"(either didn't raise enough or didn't put in enough money to call)");
@@ -142,24 +142,24 @@ public class State {
 	/** Update the state after a player calls */
 	public void advanceStateAfterCall() {
 		switch (status) {
-		case PREFLOP:
-			status = Status.FLOP;
-			for (int i = 0; i < 3; i++) { reveal(); }
-			return;
-		case FLOP:
-			status = Status.TURN;
-			reveal();
-			return;
-		case TURN:
-			status = Status.RIVER;
-			reveal();
-			return;
-		case RIVER:
-			status = Status.ROUND_OVER;
-			return;
-		case ROUND_OVER:
-		case HAS_WINNER:
-			throw new RuntimeException("Invalid state while advancing state after draw");
+			case PREFLOP:
+				status = Status.FLOP;
+				for (int i = 0; i < 3; i++) { reveal(); }
+				return;
+			case FLOP:
+				status = Status.TURN;
+				reveal();
+				return;
+			case TURN:
+				status = Status.RIVER;
+				reveal();
+				return;
+			case RIVER:
+				status = Status.ROUND_OVER;
+				return;
+			case ROUND_OVER:
+			case HAS_WINNER:
+				throw new RuntimeException("Invalid state while advancing state after draw");
 		}
 	}
 
@@ -178,21 +178,21 @@ public class State {
 
 	private boolean currentPlayerActsLast() {
 		switch (status) {
-		case PREFLOP:
-			if (next.equals(dealer)) {
-				return true;
-			}
-			break;
-		case FLOP:
-		case TURN:
-		case RIVER:
-			if (! next.equals(dealer)) {
-				return true;
-			}
-			break;
-		case ROUND_OVER:
-		case HAS_WINNER:
-			throw new RuntimeException("Invalid state for call to currentPlayerActsLast");
+			case PREFLOP:
+				if (next.equals(dealer)) {
+					return true;
+				}
+				break;
+			case FLOP:
+			case TURN:
+			case RIVER:
+				if (! next.equals(dealer)) {
+					return true;
+				}
+				break;
+			case ROUND_OVER:
+			case HAS_WINNER:
+				throw new RuntimeException("Invalid state for call to currentPlayerActsLast");
 		}
 		return false;
 	}
