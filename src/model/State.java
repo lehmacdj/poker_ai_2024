@@ -44,14 +44,14 @@ public class State {
 		player2Stack = INITIAL_STACK;
 		pot = 0;
 		winner = null;
+		dealer = Player.FIRST;
 
-		setupRound(Player.FIRST);
+		setupRound();
 	}
 
 	/** Sets up a round with [dealer] */
-	private void setupRound(Player dealer) {
+	private void setupRound() {
 		deck = new Deck();
-		this.dealer = dealer;
 		dealHands();
 		board = new ArrayList<>();
 		status = Status.PREFLOP;
@@ -88,19 +88,15 @@ public class State {
 		if (m.TYPE.equals(Type.BID)) {
 			double amount = Math.min(stack, m.AMOUNT);
 
-			pot += amount;
-			// remove gold from current players stack
-			if (next.equals(Player.FIRST)) {
-				player1Stack -= amount;
-			} else {
-				player2Stack -= amount;
-			}
-
 			if (amount == amountToCall) { // call
+				commitBidFor(next, amount);
 				if (currentPlayerActsLast()) {// round end
+					advanceStateAfterCall();
 					updatePotForWinner(playerWithWinningHand());
 				}
 			} else if (amount - amountToCall >= minimumBid) { // raise
+				minimumBid = amount - amountToCall;
+			    commitBidFor(next, amount);
 			} else {
 				throw new RuntimeException("Invalid bid " +
 						"(either didn't raise enough or didn't put in enough money to call)");
@@ -112,20 +108,59 @@ public class State {
 			updatePotForWinner(next.opponent());
 		}
 
-		if (status.equals(Status.ROUND_OVER)) {
-			// check winner
-			if (player1Stack == 0) {
-				status = Status.HAS_WINNER;
-				winner = Player.SECOND;
-			} else if (player2Stack == 0) {
-				status = Status.HAS_WINNER;
-				winner = Player.FIRST;
-			} else {
-				setupRound(dealer.opponent());
-			}
-		}
-
 		next = next.opponent();
+
+		if (status.equals(Status.ROUND_OVER)) {
+			handleRoundEnd();
+		}
+	}
+
+	public void commitBidFor(Player p, double amount) {
+		pot += amount;
+		// remove gold from current players stack
+		if (next.equals(Player.FIRST)) {
+			player1Stack -= amount;
+		} else {
+			player2Stack -= amount;
+		}
+	}
+
+	/** Handle the end of a round */
+	public void handleRoundEnd() {
+		// check winner
+		if (player1Stack == 0) {
+			status = Status.HAS_WINNER;
+			winner = Player.SECOND;
+		} else if (player2Stack == 0) {
+			status = Status.HAS_WINNER;
+			winner = Player.FIRST;
+		} else {
+			setupRound();
+		}
+	}
+
+	/** Update the state after a player calls */
+	public void advanceStateAfterCall() {
+		switch (status) {
+		case PREFLOP:
+			status = Status.FLOP;
+			for (int i = 0; i < 3; i++) { reveal(); }
+			return;
+		case FLOP:
+			status = Status.TURN;
+			reveal();
+			return;
+		case TURN:
+			status = Status.RIVER;
+			reveal();
+			return;
+		case RIVER:
+			status = Status.ROUND_OVER;
+			return;
+		case ROUND_OVER:
+		case HAS_WINNER:
+			throw new RuntimeException("Invalid state while advancing state after draw");
+		}
 	}
 
 	/** Update the pot and players stacks for winning player p. p is nonnull */
