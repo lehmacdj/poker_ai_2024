@@ -2,7 +2,7 @@ package model;
 
 public class Move {
 	public final Type TYPE;
-	public final int AMOUNT;
+	public final double AMOUNT;
 
 	public enum Type {
 		BID,
@@ -14,12 +14,12 @@ public class Move {
 		AMOUNT = -1;
 	}
 
-	private Move(int amount) {
+	private Move(double amount) {
 		TYPE = Type.BID;
 		AMOUNT = amount;
 	}
 
-	public static Move makeBid(int amount) {
+	public static Move makeBid(double amount) {
 		return new Move(amount);
 	}
 

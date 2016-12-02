@@ -1,9 +1,10 @@
 package controller;
 
 import model.*;
+import model.State.Status;
 
 public abstract class Controller implements GameListener {
-	private final Player player;
+	protected final Player player;
 
 	protected Controller(Player p) {
 		player = p;
@@ -12,8 +13,10 @@ public abstract class Controller implements GameListener {
 	public abstract Move nextMove(State s);
 
 	public void gameChanged(Game g) {
-		if (g.nextPlayer() == this.player) {
-			g.makeMove(nextMove(g.getState()));
+		if (! g.getState().getStatus().equals(Status.HAS_WINNER)) {
+			if (g.nextPlayer() == this.player) {
+				g.makeMove(nextMove(g.getState()));
+			}
 		}
 	}
 }

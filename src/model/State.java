@@ -34,7 +34,7 @@ public class State {
 	private Player winner;
 
 	// bidding state
-	private double minimumBid;
+	private double minimumRaise;
 	private double amountToCall;
 
 	/** Create a new State */
@@ -56,8 +56,10 @@ public class State {
 		board = new ArrayList<>();
 		status = Status.PREFLOP;
 		next = dealer.opponent();
-		minimumBid = INITIAL_MIN_BID;
+		minimumRaise = INITIAL_MIN_RAISE;
 		amountToCall = 0;
+		commitBidFor(dealer, SMALL_BLIND);
+		commitBidFor(dealer.opponent(), BIG_BLIND);
 	}
 
 	/** Creates a hand using cards from [deck] */
@@ -88,14 +90,15 @@ public class State {
 		if (m.TYPE.equals(Type.BID)) {
 			double amount = Math.min(stack, m.AMOUNT);
 
+			// TODO: handle the case where player calling is ALL IN
 			if (amount == amountToCall) { // call
 				commitBidFor(next, amount);
 				if (currentPlayerActsLast()) {// round end
 					advanceStateAfterCall();
 					updatePotForWinner(playerWithWinningHand());
 				}
-			} else if (amount - amountToCall >= minimumBid) { // raise
-				minimumBid = amount - amountToCall;
+			} else if (amount - amountToCall >= minimumRaise) { // raise
+				minimumRaise = amount - amountToCall;
 				commitBidFor(next, amount);
 			} else {
 				throw new RuntimeException("Invalid bid " +
@@ -214,8 +217,8 @@ public class State {
 		return pot;
 	}
 
-	public double getMinimumBid() {
-		return minimumBid;
+	public double getMinimumRaise() {
+		return minimumRaise;
 	}
 
 	public double getAmountToCall() {
@@ -255,5 +258,5 @@ public class State {
 	final static double INITIAL_STACK = 1000.;
 	final static double SMALL_BLIND = 5.;
 	final static double BIG_BLIND = 10.;
-	final static double INITIAL_MIN_BID = BIG_BLIND;
+	final static double INITIAL_MIN_RAISE = BIG_BLIND;
 }
