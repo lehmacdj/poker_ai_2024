@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import model.*;
+import model.State.Status;
 
 public class GamePrinter implements GameListener {
 	public void printPlayer(Player p, State s) {
@@ -36,8 +37,16 @@ public class GamePrinter implements GameListener {
 	public void gameChanged(Game g) {
 		State s = g.getState();
 		Player next = g.nextPlayer();
-		System.out.println();
-		printBoard(s);
-		printPlayer(next, s);
+		if (s.getStatus().equals(Status.HAS_WINNER)) {
+			printBoard(s);
+			printPlayer(next, s);
+			printPlayer(next.opponent(), s);
+			System.out.println("The winner is " + s.getWinner());
+			System.exit(0);
+		} else {
+			System.out.println();
+			printBoard(s);
+			printPlayer(next, s);
+		}
 	}
 }

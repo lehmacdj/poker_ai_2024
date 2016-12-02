@@ -121,7 +121,7 @@ public class State {
 	public void commitBidFor(Player p, double amount) {
 		pot += amount;
 		// remove gold from current players stack
-		if (next.equals(Player.FIRST)) {
+		if (p.equals(Player.FIRST)) {
 			player1Stack -= amount;
 		} else {
 			player2Stack -= amount;
@@ -131,10 +131,10 @@ public class State {
 	/** Handle the end of a round */
 	public void handleRoundEnd() {
 		// check winner
-		if (player1Stack == 0) {
+		if (player1Stack < 5.) {
 			status = Status.HAS_WINNER;
 			winner = Player.SECOND;
-		} else if (player2Stack == 0) {
+		} else if (player2Stack < 5.) {
 			status = Status.HAS_WINNER;
 			winner = Player.FIRST;
 		} else {
