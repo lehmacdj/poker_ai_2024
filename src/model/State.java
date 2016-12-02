@@ -163,7 +163,10 @@ public class State {
 	}
 
 	/** Return the person winning the board */
-	private native Player playerWithWinningHand();
+	// private native Player playerWithWinningHand();
+	private Player playerWithWinningHand() {
+		return Player.NONE;
+	}
 
 	/** returns a Hand for [p] that is not backed by the state */
 	public List<Card> getHand(Player p) {
