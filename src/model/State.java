@@ -24,14 +24,18 @@ public class State {
 	private List<Card> player2Hand;
 
 	// money that players have and the pot
-	private int player1Stack;
-	private int player2Stack;
-	private int pot;
+	private double player1Stack;
+	private double player2Stack;
+	private double pot;
 
 	// the game status
 	public enum Status { PREFLOP, FLOP, TURN, RIVER, ROUND_OVER, HAS_WINNER }
 	private Status status;
 	private Player winner;
+
+	// bidding state
+	private double minimumBid;
+	private double amountToCall;
 
 	/** Create a new State */
 	/*package*/ State() {
@@ -52,6 +56,8 @@ public class State {
 		board = new ArrayList<>();
 		status = Status.PREFLOP;
 		next = dealer.opponent();
+		minimumBid = INITIAL_MIN_BID;
+		amountToCall = 0;
 	}
 
 	/** Creates a hand using cards from [deck] */
@@ -78,9 +84,9 @@ public class State {
 
 	/** Update the cards in the state with a move */
 	/* package */ void update(Move m) {
-		int stack = getStack(next);
+		double stack = getStack(next);
 		if (m.TYPE.equals(Type.BID)) {
-			int amount = Math.min(stack, m.AMOUNT);
+			double amount = Math.min(stack, m.AMOUNT);
 
 			pot += amount;
 			// remove gold from current players stack
@@ -90,16 +96,20 @@ public class State {
 				player2Stack -= amount;
 			}
 
+			if (amount == amountToCall) { // call
+				if (currentPlayerActsLast()) {// round end
+					updatePotForWinner(playerWithWinningHand());
+				}
+			} else if (amount - amountToCall >= minimumBid) { // raise
+			} else {
+				throw new RuntimeException("Invalid bid " +
+						"(either didn't raise enough or didn't put in enough money to call)");
+			}
+
 		} else if (m.TYPE.equals(Type.FOLD)) {
 			// give money to person who didn't fold
-			if (next.opponent().equals(Player.FIRST)) {
-				player1Stack += pot;
-			} else {
-				player2Stack += pot;
-			}
-			pot = 0;
-
 			status = Status.ROUND_OVER;
+			updatePotForWinner(next.opponent());
 		}
 
 		if (status.equals(Status.ROUND_OVER)) {
@@ -114,7 +124,46 @@ public class State {
 				setupRound(dealer.opponent());
 			}
 		}
+
+		next = next.opponent();
 	}
+
+	/** Update the pot and players stacks for winning player p. p is nonnull */
+	private void updatePotForWinner(Player p) {
+		if (p.equals(Player.FIRST)) {// player 1 wins the pot
+			player1Stack += pot;
+		} else if (p.equals(Player.SECOND)) {// player 2 wins the pot
+			player2Stack += pot;
+		} else {// split the pot
+			player1Stack += pot / 2.;
+			player2Stack += pot / 2.;
+		}
+		pot = 0;
+	}
+
+	private boolean currentPlayerActsLast() {
+		switch (status) {
+		case PREFLOP:
+			if (next.equals(dealer)) {
+				return true;
+			}
+			break;
+		case FLOP:
+		case TURN:
+		case RIVER:
+			if (! next.equals(dealer)) {
+				return true;
+			}
+			break;
+		case ROUND_OVER:
+		case HAS_WINNER:
+			throw new RuntimeException("Invalid state for call to currentPlayerActsLast");
+		}
+		return false;
+	}
+
+	/** Return the person winning the board */
+	private native Player playerWithWinningHand();
 
 	/** returns a Hand for [p] that is not backed by the state */
 	public List<Card> getHand(Player p) {
@@ -123,12 +172,20 @@ public class State {
 	}
 
 	/** return the bid for [p] */
-	public int getPot() {
+	public double getPot() {
 		return pot;
 	}
 
+	public double getMinimumBid() {
+		return minimumBid;
+	}
+
+	public double getAmountToCall() {
+		return amountToCall;
+	}
+
 	/** Get the stack size for [p] */
-	public int getStack(Player p) {
+	public double getStack(Player p) {
 		return p == Player.FIRST ? player1Stack : player2Stack;
 	}
 
@@ -157,5 +214,8 @@ public class State {
 	// static
 
 	// the amount of money that players start with
-	final static int INITIAL_STACK = 1000;
+	final static double INITIAL_STACK = 1000.;
+	final static double SMALL_BLIND = 5.;
+	final static double BIG_BLIND = 10.;
+	final static double INITIAL_MIN_BID = BIG_BLIND;
 }
