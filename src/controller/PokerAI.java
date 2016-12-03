@@ -11,9 +11,34 @@ public class PokerAI extends Controller {
 		super(p);
 	}
 
-	public native Move nextMove(State s);
+	public Move nextMove(State s) {
+		Player dealer = s.getDealer();
+		boolean isDealer = player.equals(dealer);
+		double nextMove = nativeNextMove(
+			isDealer,
+			s.getPot(),
+			new double[]{s.getStack(dealer), s.getStack(dealer.opponent())},
+			s.getAmountToCall(),
+			s.getNativeHand(player),
+			s.getNativeBoard()
+		);
+		if (nextMove < 0) {
+			return Move.makeFold();
+		} else {
+			return Move.makeBid(nextMove);
+		}
+	}
+
+	public static native int nativeNextMove(
+		boolean isDealer,
+		double pot,
+		double[] stacks,
+		double minimumBidToCall,
+		long[] hand,
+		long[] board
+	);
 
 	static {
-		System.loadLibrary("pokerai");
+		System.loadLibrary("PokerLib");
 	}
 }

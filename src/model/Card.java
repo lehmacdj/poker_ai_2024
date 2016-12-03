@@ -23,10 +23,20 @@ public class Card {
 	}
 
 	public enum Suit {
-		SPADE,
-		HEART,
-		DIAMOND,
-		CLUB;
+		SPADE(3),
+		HEART(2),
+		DIAMOND(1),
+		CLUB(0);
+
+		int num;
+
+		private Suit(int i) {
+			num = i;
+		}
+
+		public int toInt() {
+			return num;
+		}
 
 		@Override
 		public String toString() {
@@ -91,5 +101,13 @@ public class Card {
 				throw new RuntimeException("impossible case");
 			}
 		}
+
+		int toInt() {
+			return number;
+		}
+	}
+
+	public long toLong() {
+		return ((long)suit.toInt() << 32) | (long)rank.toInt();
 	}
 }
