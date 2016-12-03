@@ -70,10 +70,10 @@ int nextMove(bool dealer, double pot, double *stack, double amountToCall, Card *
 
 }
 
-int winningHand(Card hands[][2], Card board[]){
+int winningHand(Card hand1[], Card hand2[], Card board[]){
     currentBoard = Board(board);
-    Hole h1 = Hole(hands[0]);
-    Hole h2 = Hole(hands[1]);
+    Hole h1 = Hole(hand1);
+    Hole h2 = Hole(hand2);
     bool h_1 = compareHoles(h1,h2);
     bool h_2 = compareHoles(h2,h1);
     if(h_1){
