@@ -18,10 +18,10 @@ extern "C" {
 /*
  * Class:     model_State
  * Method:    winningHand
- * Signature: ()Lmodel/Player;
+ * Signature: ([J[J[J)I
  */
-JNIEXPORT jobject JNICALL Java_model_State_winningHand
-  (JNIEnv *, jobject);
+JNIEXPORT jint JNICALL Java_model_State_winningHand
+  (JNIEnv *, jclass, jlongArray, jlongArray, jlongArray);
 
 #ifdef __cplusplus
 }

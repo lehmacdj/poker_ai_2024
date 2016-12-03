@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import model.Move.Type;
 
@@ -203,8 +204,25 @@ public class State {
 	/** Return the person winning the board */
 	// private native Player playerWithWinningHand();
 	private Player playerWithWinningHand() {
-		return Player.NONE;
+		int winner = winningHand(
+			getNativeHand(dealer),
+			getNativeHand(dealer.opponent()),
+			getNativeBoard()
+		);
+		if (winner == 0) {
+			return Player.NONE;
+		} else if (winner == 1) {
+			return dealer;
+		} else {
+			return dealer.opponent();
+		}
 	}
+
+	private static native int winningHand(
+		long[] hand1,
+		long[] hand2,
+		long[] board
+	);
 
 	/** returns a Hand for [p] that is not backed by the state */
 	public List<Card> getHand(Player p) {
@@ -252,7 +270,20 @@ public class State {
 		return next;
 	}
 
-	private native Player winningHand();
+	public long[] getNativeHand(Player p) {
+		List<Card> hand = getHand(p);
+		return new long[]{hand.get(0).toLong(), hand.get(1).toLong()};
+	}
+
+	public long[] getNativeBoard() {
+		return Stream.concat(
+			board.stream()
+				.map(e -> e.toLong()),
+			Stream.generate(() -> 0L))
+			.mapToLong(e -> e)
+			.limit(5)
+			.toArray();
+	}
 
 	// static
 

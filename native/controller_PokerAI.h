@@ -9,11 +9,11 @@ extern "C" {
 #endif
 /*
  * Class:     controller_PokerAI
- * Method:    nextMove
- * Signature: (Lmodel/State;)Lmodel/Move;
+ * Method:    nativeNextMove
+ * Signature: (ZD[DD[J[J)I
  */
-JNIEXPORT jobject JNICALL Java_controller_PokerAI_nextMove
-  (JNIEnv *, jobject, jobject);
+JNIEXPORT jint JNICALL Java_controller_PokerAI_nativeNextMove
+  (JNIEnv *, jclass, jboolean, jdouble, jdoubleArray, jdouble, jlongArray, jlongArray);
 
 #ifdef __cplusplus
 }
