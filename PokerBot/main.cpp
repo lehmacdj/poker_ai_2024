@@ -70,6 +70,21 @@ int nextBid(int stack[2], int pot, int amountToCall, bool dealer, Card *hand, Ca
 
 }
 
+int winningHand(Card hands[][2], Card board[]){
+    currentBoard = Board(board);
+    Hole h1 = Hole(hands[0]);
+    Hole h2 = Hole(hands[1]);
+    bool h_1 = compareHoles(h1,h2);
+    bool h_2 = compareHoles(h2,h1);
+    if(h_1){
+        return 0;
+    }else if(h_2){
+        return 1;
+    }else{
+        return -1;
+    }
+}
+
 int main(){
     int stack[] = {995, 990};
     int pot = 15;

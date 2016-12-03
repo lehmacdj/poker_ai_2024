@@ -15,6 +15,8 @@ using std::string;
 using std::pair;
 using std::vector;
 
+Board currentBoard;
+
 class Range {
 public:
     Range();
@@ -33,5 +35,7 @@ private:
     int size;
 };
 
+
+bool compareHoles(Hole h1, Hole h2);
 
 #endif //POKERBOT_RANGE_H
