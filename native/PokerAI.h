@@ -14,7 +14,7 @@ typedef struct {
     int stacks[2];
     // what bid the opponent submit for the last move
     // (negative = no previous move / fold)
-    int lastMove;
+    int minimumBidToCall;
     // what cards are in your hand
     card* hand[2];
     // the board, nullptr if unrevealed
