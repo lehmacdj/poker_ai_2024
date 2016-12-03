@@ -252,6 +252,8 @@ public class State {
 		return next;
 	}
 
+	private native Player winningHand();
+
 	// static
 
 	// the amount of money that players start with
