@@ -2,7 +2,7 @@
 #include "Card.h"
 
 Card::Card(){
-    rank = 14;
+    rank = 15;
     suit = 3;
 }
 Card::Card(int r, int s){
@@ -80,4 +80,9 @@ string Card::toString(){
             break;
     }
     return ret;
+}
+
+
+bool operator ==( Card c1, Card c2){
+    return (c1.getRank() == c2.getRank() && c1.getSuit() == c2.getSuit());
 }

@@ -4,24 +4,20 @@
 
 #ifndef POKERBOT_BOARD_H
 #define POKERBOT_BOARD_H
-#import "Card.h"
+#import "Hole.h"
 
 class Board {
 public:
-    Board(Card b[]);
+    Board();
+    Board(vector <Card> b);
+    Board(Card *b);
     Card* getBoard();
-    bool fourStraight();
-    bool fiveStraight();
-    bool threeFlush();
-    bool fourFlush();
-    bool paired();
-    bool doublePaired();
-    bool tripped();
-    bool quadded();
+    bool contains(int r);
+    int getStreet();
 
 private:
-    Card board [];
-    int street; //0, 1, 2
+    vector <Card> board;
+    int street; //0, 1, 2, 3
 };
 
 

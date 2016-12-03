@@ -3,13 +3,7 @@
 #ifndef POKERBOT_CARD_H
 #define POKERBOT_CARD_H
 #include <iostream>
-using std::cout;
-using std::endl;
-using std::cin;
-#include <string>
-#include <stdexcept>
-#include <string>
-using std::string;
+using namespace std;
 
 class Card {
 public:
@@ -25,9 +19,6 @@ private:
     int suit;
 };
 
-bool operator ==(const Card& c1, const Card& c2){
-    return (c1.rank == c2.rank && c1.suit == c2.suit);
-}
-
+bool operator ==( Card c1, Card c2);
 
 #endif //POKERBOT_CARD_H

@@ -5,21 +5,23 @@
 #ifndef POKERBOT_HAND_H
 #define POKERBOT_HAND_H
 
-#include "Board.h"
-#include "Hole.h"
+#import "Board.h"
+#include <math.h>
 
 
 class Hand {
 public:
     Hand(Hole h, Board b);
-    bool hasPair();
-    bool hasOnlyPair();
-    bool hasTrips();
-    bool hasTwoPair();
-    bool hasQuads();
-    bool hasFlush();
-    bool hasStraight();
+    long bestHandStrength();
+    Card *bestHand();
+    Board getBoard();
+    Hole getHole();
+    bool flushDraw();
+    bool openEnder();
+
 private:
+    long bestStrength;
+    Card *best;
     Hole holecards;
     Board board;
 };

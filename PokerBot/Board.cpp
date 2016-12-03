@@ -5,46 +5,58 @@
 #include "Board.h"
 
 
-Board::Board(Card b[]){
+Board::Board(vector <Card> b){
     board = b;
+    if(b.size() == 0){
+        street = 0;
+    }else{
+        street = (int)b.size() - 2;
+    }
 }
 Card *Board::getBoard(){
-    Card arr[street+3];
-    for (int i = 0; i < street + 3; i++){
+    Card *arr = (Card *)malloc(board.size() * sizeof(Card));
+    for (int i = 0; i < board.size(); i++){
         arr[i] = board[i];
     }
     return arr;
 }
 
-bool Board::quadded() {
+bool Board::contains(int r){
+    for(int i = 0; i < board.size(); i++){
+        if(r == board[i].getRank()){
+            return true;
+        }
+    }
     return false;
 }
 
-bool Board::fourFlush() {
-    return false;
+int Board::getStreet() {
+    return street;
 }
 
-bool Board::threeFlush() {
-    return false;
+Board::Board() {
 }
 
-bool Board::tripped() {
-    return false;
-}
 
-bool Board::doublePaired() {
-    return false;
-}
 
-bool Board::paired() {
-    return false;
-}
+Board::Board(Card *b) {
+    street = 3;
+    if(b[4].getRank() == 15){
+        street = 2;
+    }
+    if(b[4].getRank() == 15){
+        street = 1;
+    }
+    if(b[4].getRank() == 15){
+        street = 0;
+    }
 
-bool Board::fiveStraight() {
-    return false;
-}
+    if(street != 0){
+        for(int i = 0; i < street + 2; i++){
+            board.push_back(b[i]);
+        }
+    }else{
+    }
 
-bool Board::fourStraight() {
-    return false;
 }
 
