@@ -71,17 +71,20 @@ int nextMove(bool dealer, double pot, double *stack, double amountToCall, Card *
 }
 
 int winningHand(Card hand1[], Card hand2[], Card board[]){
-    currentBoard = Board(board);
+    Board b = Board(board);
     Hole h1 = Hole(hand1);
     Hole h2 = Hole(hand2);
-    bool h_1 = compareHoles(h1,h2);
-    bool h_2 = compareHoles(h2,h1);
-    if(h_1){
-        return 0;
-    }else if(h_2){
-        return 1;
-    }else{
+    Hand h_1 = Hand(h1,b);
+    Hand h_2 = Hand(h1,b);
+    long h1_strength = h_1.bestHandStrength();
+    long h2_strength = h_2.bestHandStrength();
+    if(h1_strength == h2_strength){
         return -1;
+    }
+    if(h1_strength > h2_strength){
+        return 0;
+    }else{
+        return 1;
     }
 }
 
@@ -95,12 +98,17 @@ int main(){
     b = new Card[5];
     cout << nextMove(dealer,pot,stack,amountToCall,hand,b);
     stack[0] = 980;
-    stack[0] = 980;
+    stack[1] = 980;
     pot = 40;
     amountToCall = 0;
     b[0] = Card(9,2);
     b[1] = Card(7,2);
     b[2] = Card(2,1);
+    cout << nextMove(dealer,pot,stack,amountToCall,hand,b);
+    b[3] = Card(5,3);
+    stack[0] = 950;
+    stack[1] = 950;
+    pot = 100;
     cout << nextMove(dealer,pot,stack,amountToCall,hand,b);
 
 }
