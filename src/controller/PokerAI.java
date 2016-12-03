@@ -1,3 +1,5 @@
+package controller;
+
 /**
  * The c++ jni interface for the AI.
  */

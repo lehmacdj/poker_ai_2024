@@ -11,7 +11,7 @@ public class Card {
 
 	@Override
 	public String toString() {
-		return rank + " of " + suit + "s";
+		return "" + rank + suit;
 	}
 
 	public Rank getRank() {
@@ -32,13 +32,13 @@ public class Card {
 		public String toString() {
 			switch(this) {
 			case SPADE:
-				return "Spade";
+				return "\u2660";
 			case HEART:
-				return "Heart";
+				return "\u2665";
 			case DIAMOND:
-				return "Diamond";
+				return "\u2666";
 			case CLUB:
-				return "Club";
+				return "\u2663";
 			default:
 				throw new RuntimeException("impossible situation");
 			}
@@ -70,7 +70,7 @@ public class Card {
 		public String toString() {
 			switch (this) {
 			case ACE:
-				return "Ace";
+				return "A";
 			case TWO:
 			case THREE:
 			case FOUR:
@@ -82,11 +82,11 @@ public class Card {
 			case TEN:
 				return Integer.toString(number);
 			case JACK:
-				return "Jack";
+				return "J";
 			case QUEEN:
-				return "Queen";
+				return "Q";
 			case KING:
-				return "King";
+				return "K";
 			default:
 				throw new RuntimeException("impossible case");
 			}

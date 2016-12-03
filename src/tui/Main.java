@@ -1,13 +1,16 @@
-import model.*;
+package tui;
 
-public class TUI {
+import model.*;
+import controller.*;
+
+public class Main {
 	public static void main(String[] args) {
 		Game g = new Game();
-		BoardPrinter p = new BoardPrinter();
+		GamePrinter p = new GamePrinter();
 		Controller human = new HumanController(Player.FIRST);
-		Controller ai = new PokerAI(Player.SECOND);
+		Controller human2 = new HumanController(Player.SECOND);
 		g.addListener(p);
-		g.addListener(ai);
+		g.addListener(human2);
 		g.addListener(human);
 		g.start();
 	}

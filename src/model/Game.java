@@ -3,17 +3,16 @@ package model;
 import java.util.ArrayList;
 
 public class Game {
-	private Player next;
 	private State state;
 	private ArrayList<GameListener> gameListeners;
 
 	public Game() {
-		next = Player.FIRST;
+		state = new State();
 		gameListeners = new ArrayList<>();
 	}
 
 	public Player nextPlayer() {
-		return next;
+		return state.nextPlayer();
 	}
 
 	public State getState() {
@@ -21,7 +20,7 @@ public class Game {
 	}
 
 	public void makeMove(Move m) {
-		state.update(next, m);
+		state.update(m);
 
 		for (GameListener gl : gameListeners) {
 			gl.gameChanged(this);
