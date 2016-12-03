@@ -39,6 +39,6 @@ public class PokerAI extends Controller {
 	);
 
 	static {
-		System.loadLibrary("PokerLib");
+		System.loadLibrary("Poker");
 	}
 }

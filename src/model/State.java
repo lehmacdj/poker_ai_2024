@@ -224,6 +224,10 @@ public class State {
 		long[] board
 	);
 
+	static {
+		System.loadLibrary("Poker");
+	}
+
 	/** returns a Hand for [p] that is not backed by the state */
 	public List<Card> getHand(Player p) {
 		List<Card> hand = p == Player.FIRST ? player1Hand : player2Hand;

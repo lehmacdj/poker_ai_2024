@@ -8,10 +8,10 @@ public class Main {
 		Game g = new Game();
 		GamePrinter p = new GamePrinter();
 		Controller human = new HumanController(Player.FIRST);
-		Controller human2 = new HumanController(Player.SECOND);
+		Controller ai = new PokerAI(Player.SECOND);
 		g.addListener(p);
-		g.addListener(human2);
 		g.addListener(human);
+		g.addListener(ai);
 		g.start();
 	}
 }
