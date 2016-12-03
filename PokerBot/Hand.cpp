@@ -45,6 +45,9 @@ bool hasTrips(Card h []){
 }
 
 bool hasStraight(Card h []){
+    if(h[0].getRank() == 2 && h[1].getRank() == 3 && h[2].getRank() == 4 && h[1].getRank() == 5 && h[1].getRank() == 14){
+        return true;
+    }
     if (hasPair(h)){
         return false;
     }
