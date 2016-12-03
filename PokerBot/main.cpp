@@ -35,35 +35,35 @@ int betSize(double SPR, int street, int stackEff, int amountToCall, int pot){
     }
 }
 
-int nextBid(int stack[2], int pot, int amountToCall, bool dealer, Card *hand, Card *b){
+int nextBid(double *stack, double pot, double amountToCall, bool dealer, Card *hand, Card *b){
     Board board = Board(b);
     int street = board.getStreet();
     Hole hole = Hole(hand);
     int myStack;
     int vilStack;
     if(dealer){
-        myStack = stack[0];
-        vilStack = stack[1];
+        myStack = (int)stack[0];
+        vilStack = (int)stack[1];
     }else{
-        myStack = stack[1];
-        vilStack = stack[0];
+        myStack = (int)stack[1];
+        vilStack = (int)stack[0];
     }
     //new Hand
     if((dealer && pot == 15) || (!dealer && pot - amountToCall == 10)){
         currentRange = Range();
     }
 
-    pair<Range,Range> ranges = currentRange.facingBet(amountToCall,board,pot);
+    pair<Range,Range> ranges = currentRange.facingBet((int)amountToCall,board,(int)pot);
 
-    int stackEff = max(myStack - amountToCall, vilStack);
+    int stackEff = (int)max(myStack - amountToCall, vilStack);
     double SPR = (double)stackEff / (pot + amountToCall);
     if (((Range) ranges.first).contains(hole)){
         //bet or raise
         currentRange = ranges.first;
-        return betSize(SPR,street,stackEff,amountToCall,pot);
+        return betSize(SPR,street,stackEff,(int)amountToCall,(int)pot);
     }else if (((Range) ranges.second).contains(hole)){
         currentRange = ranges.second;
-        return amountToCall;
+        return (int)amountToCall;
     }else{
         return -1;
     }
@@ -86,9 +86,9 @@ int winningHand(Card hands[][2], Card board[]){
 }
 
 int main(){
-    int stack[] = {995, 990};
-    int pot = 15;
-    int amountToCall = 5;
+    double stack[] = {995, 990};
+    double pot = 15;
+    double amountToCall = 5;
     bool dealer = true;
     Card hand[] = {Card(10,3), Card(10,2)};
     Card *b = new Card[5];

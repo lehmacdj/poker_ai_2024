@@ -8,6 +8,7 @@ using std::endl;
 using std::cin;
 using std::sort;
 
+Board currentBoard;
 
 Range::Range(){
     vector <Hole> full_range;

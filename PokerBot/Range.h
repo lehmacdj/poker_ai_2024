@@ -15,7 +15,7 @@ using std::string;
 using std::pair;
 using std::vector;
 
-Board currentBoard;
+extern Board currentBoard;
 
 class Range {
 public:
