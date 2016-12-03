@@ -35,7 +35,7 @@ int betSize(double SPR, int street, int stackEff, int amountToCall, int pot){
     }
 }
 
-int nextBid(double *stack, double pot, double amountToCall, bool dealer, Card *hand, Card *b){
+int nextMove(bool dealer, double pot, double *stack, double amountToCall, Card *hand, Card *b){
     Board board = Board(b);
     int street = board.getStreet();
     Hole hole = Hole(hand);
@@ -91,8 +91,9 @@ int main(){
     double amountToCall = 5;
     bool dealer = true;
     Card hand[] = {Card(10,3), Card(10,2)};
-    Card *b = new Card[5];
-    cout << nextBid(stack,pot,amountToCall,dealer,hand,b);
+    Card *b;
+    b = new Card[5];
+    cout << nextMove(dealer,pot,stack,amountToCall,hand,b);
     stack[0] = 980;
     stack[0] = 980;
     pot = 40;
@@ -100,6 +101,6 @@ int main(){
     b[0] = Card(9,2);
     b[1] = Card(7,2);
     b[2] = Card(2,1);
-    cout << nextBid(stack,pot,amountToCall,dealer,hand,b);
+    cout << nextMove(dealer,pot,stack,amountToCall,hand,b);
 
 }
