@@ -187,7 +187,7 @@ pair<Card*,long> calcBestStrength(Hole hole, Board board) {
         array[i] = h[i-2];
     }
 
-    Card arr [5];
+    Card* arr = new Card[5];
     long max = 0;
     for(int i = 0; i < numCards - 4; i++){
         for(int j = i + 1; j < numCards - 3; j++){
