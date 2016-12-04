@@ -51,14 +51,14 @@ public class State {
 	}
 
 	/** Sets up a round with [dealer] */
-	private void setupRound() {
+	/*package*/ void setupRound() {
 		deck = new Deck();
 		dealHands();
 		board = new ArrayList<>();
 		status = Status.PREFLOP;
 		next = dealer;
 		minimumRaise = INITIAL_MIN_RAISE;
-		amountToCall = 5;
+		amountToCall = BIG_BLIND - SMALL_BLIND;
 		commitBidFor(dealer, SMALL_BLIND);
 		commitBidFor(dealer.opponent(), BIG_BLIND);
 	}
@@ -96,11 +96,11 @@ public class State {
 				commitBidFor(next, amount);
 				if (currentPlayerActsLast()) {// round end
 					advanceStateAfterCall();
-					updatePotForWinner(playerWithWinningHand());
 				}
 			} else if (amount - amountToCall >= minimumRaise &&
-					amountToCall + amount <= getStack(next.opponent())) { // raise
+					amount - amountToCall <= getStack(next.opponent())) { // raise
 				minimumRaise = amount - amountToCall;
+				amountToCall = amount - amountToCall;
 				commitBidFor(next, amount);
 			} else {
 				throw new RuntimeException("Invalid bid (" + amount + ") " +
@@ -134,6 +134,7 @@ public class State {
 
 	/** Handle the end of a round */
 	public void handleRoundEnd() {
+		updatePotForWinner(playerWithWinningHand());
 		// check winner
 		if (player1Stack < 5.) {
 			status = Status.HAS_WINNER;
@@ -141,8 +142,6 @@ public class State {
 		} else if (player2Stack < 5.) {
 			status = Status.HAS_WINNER;
 			winner = Player.FIRST;
-		} else {
-			setupRound();
 		}
 	}
 

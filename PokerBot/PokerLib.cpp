@@ -1,9 +1,9 @@
-#include "controller_PokerAI.h"
+#include "tui_PokerAI.h"
 #include "model_State.h"
 #include "PokerAI.h"
 #include "stdio.h"
 
-JNIEXPORT jint JNICALL Java_controller_PokerAI_nativeNextMove(
+JNIEXPORT jint JNICALL Java_tui_PokerAI_nativeNextMove(
     JNIEnv* env,
     jclass PokerAI,
     jboolean isDealer,

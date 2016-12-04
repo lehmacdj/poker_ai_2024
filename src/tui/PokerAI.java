@@ -1,10 +1,8 @@
-package controller;
+package tui;
 
-/**
- * The c++ jni interface for the AI.
- */
-
-import model.*;
+import model.Move;
+import model.Player;
+import model.State;
 
 public class PokerAI extends Controller {
 	public PokerAI(Player p) {
@@ -16,7 +14,7 @@ public class PokerAI extends Controller {
 		boolean isDealer = player.equals(dealer);
 		long[] nativeHand = s.getNativeHand(player);
 		long[] nativeBoard = s.getNativeBoard();
-		System.out.printf("%b, %.1f, [%.1f, %.1f], %.1f, [%x, %x], [%x, %x, %x, %x, %x]",
+		System.out.printf("%b, %.1f, [%.1f, %.1f], %.1f, [%x, %x], [%x, %x, %x, %x, %x]\n",
 			isDealer,
 			s.getPot(),
 			s.getStack(dealer),

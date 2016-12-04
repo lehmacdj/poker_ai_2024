@@ -28,7 +28,7 @@ public class GamePrinter implements GameListener {
 				.limit(5)
 				.map(e -> e
 					.map(v -> v.toString())
-					.orElse("Unrevealed"))
+					.orElse("-"))
 				.collect(Collectors.joining(", "))
 		);
 	}
@@ -36,17 +36,19 @@ public class GamePrinter implements GameListener {
 	@Override
 	public void gameChanged(Game g) {
 		State s = g.getState();
-		Player next = g.nextPlayer();
-		if (s.getStatus().equals(Status.HAS_WINNER)) {
+		System.out.println();
+		if (s.getStatus().equals(Status.ROUND_OVER)) {
 			printBoard(s);
-			printPlayer(next, s);
-			printPlayer(next.opponent(), s);
+			printPlayer(Player.FIRST, s);
+			printPlayer(Player.SECOND, s);
+			System.out.println(s.getWinner() + " wins the round.");
+			g.startNextRound();
+		} else if (s.getStatus().equals(Status.HAS_WINNER)) {
+			printBoard(s);
+			printPlayer(Player.FIRST, s);
+			printPlayer(Player.SECOND, s);
 			System.out.println("The winner is " + s.getWinner());
 			System.exit(0);
-		} else {
-			System.out.println();
-			printBoard(s);
-			printPlayer(next, s);
 		}
 	}
 }

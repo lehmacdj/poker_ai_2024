@@ -31,6 +31,13 @@ public class Game {
 		gameListeners.add(gl);
 	}
 
+	public void startNextRound() {
+		state.setupRound();
+		for (GameListener gl : gameListeners) {
+			gl.gameChanged(this);
+		}
+	}
+
 	public void start() {
 		for (GameListener gl : gameListeners) {
 			gl.gameChanged(this);

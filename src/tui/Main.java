@@ -1,7 +1,7 @@
 package tui;
 
-import model.*;
-import controller.*;
+import model.Game;
+import model.Player;
 
 public class Main {
 	public static void main(String[] args) {
