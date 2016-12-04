@@ -178,7 +178,7 @@ long handStrength(Card c1, Card c2, Card c3, Card c4, Card c5){
 //second value the long hand strength of the hand
 pair<Card*,long> calcBestStrength(Hole hole, Board board) {
     int numCards = board.getStreet() + 5;
-    Card *b = board.getBoard();
+    // Card *b = board.getBoard();
     Card *h = hole.getCards();
     Card *array = new Card[numCards];
     array[0] = h[0];
@@ -274,7 +274,7 @@ bool Hand::openEnder() {
         return false;
     }
     Card *hole;
-    int numBoard = board.getStreet() + 3;
+    // int numBoard = board.getStreet() + 3;
     hole = holecards.getCards();
     int r0 = hole[0].getRank();
     int r1 = hole[1].getRank();
