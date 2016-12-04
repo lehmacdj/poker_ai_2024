@@ -45,10 +45,10 @@ Board::Board(Card *b) {
     if(b[4].getRank() == 0){
         street = 2;
     }
-    if(b[4].getRank() == 0){
+    if(b[3].getRank() == 0){
         street = 1;
     }
-    if(b[4].getRank() == 0){
+    if(b[2].getRank() == 0){
         street = 0;
     }
 
