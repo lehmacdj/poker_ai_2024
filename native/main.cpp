@@ -1,5 +1,6 @@
 #include "Range.h"
 #include "PokerAI.h"
+#include "stdio.h"
 Range currentRange;
 
 
@@ -45,10 +46,17 @@ Card* convert_card_array(card* c, int size) {
 }
 
 int nextMove(bool dealer, double pot, double *stack, double amountToCall, card* hand, card* b){
+    printf("(%x,%x), (%x,%x)\n", hand[0].rank, hand[1].suit, hand[1].rank, hand[1].suit);
+
+    cout << "1";
     Board board = Board(convert_card_array(b, 5));
+    cout << "Hi";
     int street = board.getStreet();
+    cout << "2";
     Hole hole = Hole(convert_card_array(hand, 2));
+    cout << "3";
     int myStack;
+    cout << "4";
     int vilStack;
     if(dealer){
         myStack = (int)stack[0];
@@ -57,12 +65,15 @@ int nextMove(bool dealer, double pot, double *stack, double amountToCall, card* 
         myStack = (int)stack[1];
         vilStack = (int)stack[0];
     }
+    cout << "5";
     //new Hand
     if((dealer && pot == 15) || (!dealer && pot - amountToCall == 10)){
         currentRange = Range();
     }
+    cout << "6";
 
     pair<Range,Range> ranges = currentRange.facingBet((int)amountToCall,board,(int)pot);
+    cout << "7";
 
     int stackEff = (int)max(myStack - amountToCall, vilStack);
     double SPR = (double)stackEff / (pot + amountToCall);

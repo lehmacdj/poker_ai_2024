@@ -14,13 +14,23 @@ public class PokerAI extends Controller {
 	public Move nextMove(State s) {
 		Player dealer = s.getDealer();
 		boolean isDealer = player.equals(dealer);
+		long[] nativeHand = s.getNativeHand(player);
+		long[] nativeBoard = s.getNativeBoard();
+		System.out.printf("%b, %.1f, [%.1f, %.1f], %.1f, [%x, %x], [%x, %x, %x, %x, %x]",
+			isDealer,
+			s.getPot(),
+			s.getStack(dealer),
+			s.getStack(dealer.opponent()),
+			s.getAmountToCall(),
+			nativeHand[0], nativeHand[1],
+			nativeBoard[0], nativeBoard[1], nativeBoard[2], nativeBoard[3], nativeBoard[4]);
 		double nextMove = nativeNextMove(
 			isDealer,
 			s.getPot(),
 			new double[]{s.getStack(dealer), s.getStack(dealer.opponent())},
 			s.getAmountToCall(),
-			s.getNativeHand(player),
-			s.getNativeBoard()
+			nativeHand,
+			nativeBoard
 		);
 		if (nextMove < 0) {
 			return Move.makeFold();

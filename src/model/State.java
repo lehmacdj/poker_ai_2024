@@ -56,7 +56,7 @@ public class State {
 		dealHands();
 		board = new ArrayList<>();
 		status = Status.PREFLOP;
-		next = dealer.opponent();
+		next = dealer;
 		minimumRaise = INITIAL_MIN_RAISE;
 		amountToCall = 0;
 		commitBidFor(dealer, SMALL_BLIND);

@@ -1,6 +1,7 @@
 #include "controller_PokerAI.h"
 #include "model_State.h"
 #include "PokerAI.h"
+#include "stdio.h"
 
 JNIEXPORT jint JNICALL Java_controller_PokerAI_nativeNextMove(
     JNIEnv* env,
@@ -16,6 +17,8 @@ JNIEXPORT jint JNICALL Java_controller_PokerAI_nativeNextMove(
     card* hand = (card*) env->GetLongArrayElements(jhand, nullptr);
     card* board = (card*) env->GetLongArrayElements(jboard, nullptr);
 
+    printf("\n");
+
     int move = (jint) nextMove(
         (bool) isDealer,
         (double) pot,
@@ -25,9 +28,9 @@ JNIEXPORT jint JNICALL Java_controller_PokerAI_nativeNextMove(
         board
     );
 
-    env->ReleaseDoubleArrayElements(jstacks, stacks, 0);
-    env->ReleaseLongArrayElements(jhand, (jlong*) hand, 0);
-    env->ReleaseLongArrayElements(jboard, (jlong*) board, 0);
+    // env->ReleaseDoubleArrayElements(jstacks, stacks, 0);
+    // env->ReleaseLongArrayElements(jhand, (jlong*) hand, 0);
+    // env->ReleaseLongArrayElements(jboard, (jlong*) board, 0);
 
     return move;
 }
@@ -45,9 +48,9 @@ JNIEXPORT jint JNICALL Java_model_State_winningHand(
 
     int winner = winningHand(hand1, hand2, board);
 
-    env->ReleaseLongArrayElements(jhand1, (jlong*) hand1, 0);
-    env->ReleaseLongArrayElements(jhand2, (jlong*) hand2, 0);
-    env->ReleaseLongArrayElements(jboard, (jlong*) board, 0);
+    // env->ReleaseLongArrayElements(jhand1, (jlong*) hand1, 0);
+    // env->ReleaseLongArrayElements(jhand2, (jlong*) hand2, 0);
+    // env->ReleaseLongArrayElements(jboard, (jlong*) board, 0);
 
     return winner;
 }

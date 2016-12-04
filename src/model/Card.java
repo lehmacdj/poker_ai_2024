@@ -108,6 +108,6 @@ public class Card {
 	}
 
 	public long toLong() {
-		return ((long)suit.toInt() << 32) | (long)rank.toInt();
+		return ((long)rank.toInt() << 32) | (long)suit.toInt();
 	}
 }

@@ -6,7 +6,7 @@ FLAGS+=-std=c++11
 JAVAFILES := $(wildcard src/*/*.java)
 CLASSFILES := $(wildcard bin/*/*.class)
 
-all: java
+all: native java
 
 java: $(JAVAFILES)
 	javac -d 'bin/' $(JAVAFILES)
