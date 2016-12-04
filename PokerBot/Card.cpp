@@ -2,8 +2,8 @@
 #include "Card.h"
 
 Card::Card(){
-    rank = 15;
-    suit = 3;
+    rank = 0;
+    suit = 0;
 }
 Card::Card(int r, int s){
     rank = r;

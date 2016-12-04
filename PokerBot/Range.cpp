@@ -92,8 +92,10 @@ bool Range::contains(Hole h){
     return false;
 }
 
+//returns a pair<Range,Range> where the first value is the bet/raising range and the second value is the check/calling range
 pair<Range,Range> Range::facingBet(int bet, Board b, int potSize) {
-    double potOdds = (double)bet / (double)potSize;
+
+    double potOdds = (double)bet / potSize;
     vector <int> bluffIndices;
     switch (b.getStreet()){
         case 0 : {

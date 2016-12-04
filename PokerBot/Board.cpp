@@ -35,19 +35,20 @@ int Board::getStreet() {
 }
 
 Board::Board() {
+
 }
 
 
 
 Board::Board(Card *b) {
     street = 3;
-    if(b[4].getRank() == 15){
+    if(b[4].getRank() == 0){
         street = 2;
     }
-    if(b[4].getRank() == 15){
+    if(b[4].getRank() == 0){
         street = 1;
     }
-    if(b[4].getRank() == 15){
+    if(b[4].getRank() == 0){
         street = 0;
     }
 
