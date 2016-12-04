@@ -15,7 +15,7 @@ java: $(JAVAFILES)
 clean:
 	rm -rf bin/*
 
-SOURCES=native/Board.cpp native/Card.cpp native/Hand.cpp native/Hole.cpp native/Range.cpp native/main.cpp native/PokerLib.cpp
+SOURCES=PokerBot/Board.cpp PokerBot/Card.cpp PokerBot/Hand.cpp PokerBot/Hole.cpp PokerBot/Range.cpp PokerBot/main.cpp PokerBot/PokerLib.cpp
 
 .PHONY: native
 native:
