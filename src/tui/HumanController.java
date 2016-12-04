@@ -41,7 +41,7 @@ public class HumanController extends Controller {
 	public Move readMove(State s) {
 		System.out.println("Please enter one of the following commands:");
 		System.out.println(" call");
-		System.out.println(" raise <amount>");
+		System.out.printf(" raise <amount> where amount >= %.1f\n", s.getMinimumRaise());
 		System.out.println(" fold");
 		System.out.println(" all-in");
 		String command = in.next();
