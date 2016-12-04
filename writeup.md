@@ -1,5 +1,6 @@
 # Poker AI
 Devin Lehmacher - djl329
+
 Jonathan Ho - jh964
 
 For the final project of CS 2024, we decided to create a relatively
