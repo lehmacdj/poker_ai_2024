@@ -93,6 +93,7 @@ public class State {
 
 			// TODO: handle the case where player calling is ALL IN
 			if (amount == amountToCall) { // call
+				amountToCall = 0;
 				commitBidFor(next, amount);
 				if (currentPlayerActsLast()) {// round end
 					advanceStateAfterCall();
