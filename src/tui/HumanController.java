@@ -19,6 +19,7 @@ public class HumanController extends Controller {
 
 	@Override
 	public Move nextMove(State s) {
+		// privacy during dual human games
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		System.out.println("Press enter to continue");
 		in.nextLine();
@@ -60,6 +61,10 @@ public class HumanController extends Controller {
 		} else if (command.equals("fold")) {
 			move = Move.makeFold();
 		} else if (command.equals("all-in")) {
+			if (s.getStack(player) - s.getAmountToCall() > s.getStack(player.opponent())) {
+				System.out.println("Error: can't raise more money than your opponent has");
+				return null;
+			}
 			move = Move.makeBid(s.getStack(player));
 		} else if (command.equals("quit") || command.equals(":q")) {
 			System.out.println("Ending game...");
