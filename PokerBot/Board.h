@@ -11,12 +11,12 @@ public:
     Board();
     Board(vector <Card> b);
     Board(Card *b);
-    Card* getBoard();
+    vector<Card> getBoard();
     bool contains(int r);
     int getStreet();
 
 private:
-    vector <Card> board;
+    vector<Card> board;
     int street; //0, 1, 2, 3
 };
 

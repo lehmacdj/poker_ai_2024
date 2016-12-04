@@ -15,18 +15,18 @@ Hole::Hole(Card card1, Card card2) {
     c2 = card2;
 }
 
-Card *Hole::getCards(){
-    Card *arr = new Card[2];
-    arr[0] = c1;
-    arr[1] = c2;
-    return arr;
+vector<Card> Hole::getCards(){
+    vector<Card> r;
+    r.push_back(c1);
+    r.push_back(c2);
+    return r;
 }
 string Hole::toString(){
     string ret = c1.toString() + c2.toString();
     return ret;
 }
 
-Hole::Hole(Card *cards) {
+Hole::Hole(vector<Card> cards) {
     c1 = cards[0];
     c2 = cards[1];
 }

@@ -13,10 +13,10 @@ class Hole {
 public:
     Hole();
     Hole(Card card1, Card card2);
-    Hole(Card cards[]);
+    Hole(vector<Card> cards);
 
     string toString();
-    Card *getCards();
+    vector<Card> getCards();
 private:
     Card c1;
     Card c2;

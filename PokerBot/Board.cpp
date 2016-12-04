@@ -7,22 +7,13 @@
 
 Board::Board(vector <Card> b){
     board = b;
-    if(b.size() == 0){
-        street = 0;
-    }else{
-        street = (int)b.size() - 2;
-    }
 }
-Card *Board::getBoard(){
-    Card *arr = (Card *)malloc(board.size() * sizeof(Card));
-    for (int i = 0; i < board.size(); i++){
-        arr[i] = board[i];
-    }
-    return arr;
+vector<Card> Board::getBoard(){
+    return board;
 }
 
 bool Board::contains(int r){
-    for(int i = 0; i < board.size(); i++){
+    for(int i = 0; i < 5; i++){
         if(r == board[i].getRank()){
             return true;
         }

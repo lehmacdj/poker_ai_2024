@@ -77,8 +77,8 @@ string Range::toString(){
 }
 
 bool operator==( Hole& h1,  Hole& h2){
-    Card *h_1 = h1.getCards();
-    Card *h_2 = h2.getCards();
+    vector<Card> h_1 = h1.getCards();
+    vector<Card> h_2 = h2.getCards();
 
     return (h_1[0] == h_2[0] && h_1[1] == h_2[1]) || (h_1[0] == h_2[1] && h_1[1] == h_2[0]);
 }
@@ -92,10 +92,12 @@ bool Range::contains(Hole h){
     return false;
 }
 
-pair<Range,Range> Range::facingBet(int bet, Board b, int potSize) {
-    double potOdds = (double)bet / (double)potSize;
+//returns a pair<Range,Range> where the first value is the bet/raising range and the second value is the check/calling range
+pair<Range,Range> Range::facingBet(int bet, Board *b, int potSize) {
+
+    double potOdds = (double)bet / potSize;
     vector <int> bluffIndices;
-    switch (b.getStreet()){
+    switch (b->getStreet()){
         case 0 : {
             if (potSize == 15) {
                 return pair<Range, Range>(splitRange(1, 0.1), splitRange(0, 0));
@@ -167,13 +169,49 @@ vector<Hole> Range::getRange() {
     return range;
 }
 
-bool compareHoles(Hole h1, Hole h2) {
-    return Hand(h1,currentBoard).bestHandStrength() > Hand(h2,currentBoard).bestHandStrength();
+/** pivot a list on [index], and return the new index of the pivot */
+int partition(vector<Hand> b, int start, int end) {
+    int h = start;
+    // b[start..h-1] <= b[end], b[h..i-1] > b[end], b[i..end-1] is unknown
+    for (int i = start; i < end; i++) {
+        if (b[i].bestHandStrength() <= b[end].bestHandStrength()) {
+            swap(b[i], b[h]);
+            h++;
+        }
+    }
+    swap(b[end], b[h]);
+    return h;
 }
 
-void Range::sortRange(Board b) {
-    currentBoard = b;
-    sort(range.begin(), range.end(), compareHoles);
+/** quick sort b[start..end] */
+void _quick_sort(vector<Hand> b, int start, int end) {
+    if (end - start < 2)
+        return;
+
+    int mid = partition(b, start, end);
+    _quick_sort(b, start, mid - 1);
+    _quick_sort(b, mid + 1, end);
+}
+
+/** sort b using quicksort */
+void quick_sort(vector<Hand> b, int length) {
+    _quick_sort(b, 0, length - 1);
+}
+bool compareHands(Hand h1, Hand h2) {
+    return h1.bestHandStrength() > h2.bestHandStrength();
+}
+
+void Range::sortRange(Board *b) {
+    vector<Hand> hands;
+    for(int i = 0; i< size; i++){
+        hands.push_back(Hand(range[i],b));
+    }
+    quick_sort(hands,size);
+    vector<Hole> newHoles;
+    for(int i = 0; i < size; i++){
+        newHoles.push_back(hands[i].getHole());
+    }
+    range = newHoles;
 }
 
 void Range::add(Hole h) {

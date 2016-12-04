@@ -25,10 +25,10 @@ public:
     Range splitRange(double top, double bottom);
     string toString();
     bool contains(Hole h);
-    pair<Range,Range> facingBet(int bet, Board b, int potSize);
+    pair<Range,Range> facingBet(int bet, Board *b, int potSize);
     Range combine(Range r);
     vector <Hole> getRange();
-    void sortRange(Board b);
+    void sortRange(Board *b);
     void add(Hole h);
 private:
     vector <Hole> range;
