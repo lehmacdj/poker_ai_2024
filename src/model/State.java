@@ -98,12 +98,15 @@ public class State {
 					advanceStateAfterCall();
 					updatePotForWinner(playerWithWinningHand());
 				}
-			} else if (amount - amountToCall >= minimumRaise) { // raise
+			} else if (amount - amountToCall >= minimumRaise &&
+					amountToCall + amount <= getStack(next.opponent())) { // raise
 				minimumRaise = amount - amountToCall;
 				commitBidFor(next, amount);
 			} else {
-				throw new RuntimeException("Invalid bid " +
-						"(either didn't raise enough or didn't put in enough money to call)");
+				throw new RuntimeException("Invalid bid (" + amount + ") " +
+						"(either didn't raise enough, " +
+						"didn't put in enough money to call, " +
+						"or bid more money than the opponent could add)");
 			}
 
 		} else if (m.TYPE.equals(Type.FOLD)) {
