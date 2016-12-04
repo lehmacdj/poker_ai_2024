@@ -58,7 +58,7 @@ public class State {
 		status = Status.PREFLOP;
 		next = dealer;
 		minimumRaise = INITIAL_MIN_RAISE;
-		amountToCall = 0;
+		amountToCall = 5;
 		commitBidFor(dealer, SMALL_BLIND);
 		commitBidFor(dealer.opponent(), BIG_BLIND);
 	}
